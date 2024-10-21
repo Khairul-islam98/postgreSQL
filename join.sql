@@ -30,4 +30,22 @@ VALUES
 
 SELECT * FROM "user";
 
- SELECT * FROM post;
+ SELECT * FROM post; 
+
+-- Join
+SELECT  title, username FROM post
+JOIN "user" ON post.userid = "user".id;
+SELECT  * FROM post
+JOIN "user" ON post.userid = "user".id;
+
+-- left join
+SELECT  * FROM post 
+LEFT JOIN "user" ON post.userid = "user".id;
+
+-- right join
+SELECT  * FROM post 
+RIGHT JOIN "user" ON post.userid = "user".id;
+
+-- full join
+SELECT  * FROM post 
+FULL OUTER JOIN "user" ON post.userid = "user".id;
