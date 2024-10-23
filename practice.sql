@@ -1,3 +1,4 @@
+-- Active: 1729099285669@@127.0.0.1@5432@practicedb
 
 
 CREATE TABLE employees (
@@ -63,3 +64,39 @@ LIMIT 1;
 
 SELECT extract(YEAR FROM hire_date) as hire_year, count(*) FROM employees
 GROUP BY hire_year;
+
+
+
+CREATE TABLE orders(
+    order_id SERIAL PRIMARY KEY,
+    customer_id INT,
+    order_date DATE,
+    total_amount DECIMAL(10, 2)
+)
+
+INSERT INTO orders (customer_id, order_date, total_amount) VALUES
+(1, '2022-01-05', 100.50),
+(2, '2020-01-10', 200.75),
+(1, '2023-01-15', 300.25),
+(3, '2022-02-05', 150.50),
+(2, '2024-02-10', 250.75),
+(3, '2021-02-15', 350.25),
+(1, '2021-03-05', 200.50),
+(2, '2022-07-10', 300.75),
+(2, '2024-03-15', 400.25),
+(4, '2022-03-15', 400.25);
+
+DROP TABLE orders;
+
+SELECT * FROM orders;
+
+-- Find customers who have placed more than 2 orders and calculate the total amount  spent by each of these customers.
+
+SELECT customer_id, count(*) as order_count, sum(total_amount) as total_spent FROM orders
+GROUP BY customer_id HAVING count(order_id) > 2;
+
+-- Find the total amount orders placed each month in the year 2022.
+
+SELECT extract(MONTH FROM order_date) as month, sum(total_amount) as total_amount FROM orders
+WHERE extract(YEAR FROM order_date) = 2022
+GROUP BY month;
